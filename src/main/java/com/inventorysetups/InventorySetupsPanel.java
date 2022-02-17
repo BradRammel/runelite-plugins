@@ -83,21 +83,23 @@ public class InventorySetupsPanel extends PluginPanel implements ActionListener 
     @Override
     public void actionPerformed(ActionEvent event)
     {
-        if ("export".equals(event.getActionCommand()))
-        {
-            String setupName = JOptionPane.showInputDialog("Please enter a name for the setup.");
-            SetupExporter exporter = new SetupExporter(plugin, client, itemManager, clientThread);
-            exporter.exportToFile(RUNELITE_SETTINGS + SETUPS_DIR + "/" + setupName + ".txt");
-
-            // figure out how to update the dropdown with new values since
-            // exporter.exportToFile() is running on the client thread making
-            // this not work. To update the UI after exporting a new setup turn
-            // the inventory presets plugin off then back on.
-            // updateSetups();
-        }
-        else if ("delete".equals(event.getActionCommand()))
-        {
-            deleteSetup();
+        switch (event.getActionCommand()) {
+            case "export":
+                String setupName = JOptionPane.showInputDialog("Please enter a name for the setup");
+                SetupExporter exporter = new SetupExporter(plugin, client, itemManager, clientThread);
+                exporter.exportToFile(RUNELITE_SETTINGS + SETUPS_DIR + "/" + setupName + ".txt");
+                // figure out how to update the dropdown with new values since
+                // exporter.exportToFile() is running on the client thread making
+                // this not work. To update the UI after exporting a new setup turn
+                // the inventory presets plugin off then back on.
+                // updateSetups();
+                break;
+            case "delete":
+                deleteSetup();
+                break;
+            case "update":
+                //todo update
+                break;
         }
     }
 
