@@ -7,6 +7,7 @@ import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.ColorScheme;
 import net.runelite.client.ui.PluginPanel;
 
+import javax.inject.Inject;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -20,20 +21,22 @@ public class InventorySetupsPanel extends PluginPanel implements ActionListener 
     private static final String SETUPS_DIR = "/inventory-presets/setups";
 
     private final InventorySetupsPlugin plugin;
-    private Client client;
-    private ItemManager itemManager;
-    private ClientThread clientThread;
 
     private JComboBox<String> setupComboBox;
     private ItemPanel itemPanel;
 
-    InventorySetupsPanel(final InventorySetupsPlugin plugin, Client client, ItemManager itemManager,
-                         ClientThread clientThread)
+    private Client client;
+    private ClientThread clientThread;
+    private ItemManager itemManager;
+
+    @Inject
+    InventorySetupsPanel(final InventorySetupsPlugin plugin, Client client, ClientThread clientThread,
+                         ItemManager itemManager)
     {
         this.plugin = plugin;
         this.client = client;
-        this.itemManager = itemManager;
         this.clientThread = clientThread;
+        this.itemManager = itemManager;
 
         setBorder(new EmptyBorder(6, 6, 6, 6));
         setBackground(ColorScheme.DARK_GRAY_COLOR);
@@ -50,7 +53,7 @@ public class InventorySetupsPanel extends PluginPanel implements ActionListener 
 
         JPanel spacing = new JPanel();
         spacing.setPreferredSize(new Dimension(0, 10));
-        itemPanel = new ItemPanel(itemManager, "None");
+        itemPanel = new ItemPanel(this.itemManager, "None");
         layoutPanel.add(itemPanel);
 
         setupComboBox.addActionListener(new ActionListener() {
@@ -162,7 +165,7 @@ public class InventorySetupsPanel extends PluginPanel implements ActionListener 
             String fileName = setup.getName().split("\\.")[0];
             if (currentSetup.equals(fileName))
             {
-
+                // todo
             }
         }
     }

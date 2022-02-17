@@ -45,7 +45,7 @@ public class InventorySetupsPlugin extends Plugin
 	@Override
 	protected void startUp() throws Exception
 	{
-		panel = new InventorySetupsPanel(this, client, itemManager, clientThread);
+		panel = injector.getInstance(InventorySetupsPanel.class);
 		final BufferedImage icon = ImageUtil.loadImageResource(getClass(), "ranged.png");
 
 		navButton = NavigationButton.builder()
